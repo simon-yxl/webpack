@@ -4,8 +4,12 @@ module.exports = {
       if (v1 || v2) {
         return options.fn(this);
       }
-
       return options.inverse(this);
+    },
+    "hump": function (v, options) {
+      return v.replace(/\-(\w)/g, function(all, letter){
+       return letter.toUpperCase();
+      });
     }
   },
   "prompts": {

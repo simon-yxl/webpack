@@ -15,7 +15,7 @@ Vue.use(Vuex){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
 import ZZPerf from '@zz/perf/src/vue'
 Vue.use(ZZPerf,{
-  projectPrefix:'{{ name }}'
+  projectPrefix:'{{ hump name }}'
 })
 
 Vue.config.productionTip = false{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
