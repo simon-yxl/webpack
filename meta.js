@@ -9,7 +9,9 @@ module.exports = {
     "hump": function (v, options) {
       return v.replace(/\-(\w)/g, function(all, letter){
        return letter.toUpperCase();
-      });
+      }).replace(/^(\w)/g, function(m){
+        return m.toUpperCase()
+      })
     }
   },
   "prompts": {
