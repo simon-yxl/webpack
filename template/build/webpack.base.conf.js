@@ -11,6 +11,7 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
+    vendor: ['vue'{{#router}}, 'vue-router'{{/router}}{{#vuex}}, 'vuex'{{/vuex}}, '@zz/perf'],
     app: './src/main.js'
   },
   output: {
@@ -23,10 +24,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      {{#if_eq build "standalone"}}
-      'vue$': 'vue/dist/vue.esm.js',
-      {{/if_eq}}
-      '@': resolve('src'),
+      // 'vue$': 'vue/dist/vue.esm.js',
+      'vue': 'vue/dist/vue.js',
+      // '@': resolve('src'),
+      'assets': resolve('src/assets'),
+      'components': resolve('src/components')
     }
   },
   module: {
@@ -51,13 +53,13 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/@zz/perf')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 2048,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },

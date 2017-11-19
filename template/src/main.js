@@ -13,6 +13,11 @@ import store from  './store/store'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 Vue.use(Vuex){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 {{/vuex}}
 
+import ZZPerf from '@zz/perf/src/vue'
+Vue.use(ZZPerf,{
+  projectPrefix:{{ name }}
+})
+
 Vue.config.productionTip = false{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
 /* eslint-disable no-new */

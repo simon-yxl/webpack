@@ -9,12 +9,58 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
+
+function* entries(obj) {
+  for (let key of Object.keys(obj)) {
+    yield [key, obj[key]];
+  }
+}
+const inline = config.build.inline
+let regRxpArr = []
+let inlineRegExp = null
+if(inline) {
+  for(let [k, v] of entries(inline)) {
+    if(k === 'style' && v.length) {
+      regRxpArr.push(`(${v.join('|')})\.(.+)?\.css`) 
+    } else if(k === 'script' && v.length) {
+      regRxpArr.push(`(${v.join('|')})\.(.+)?\.js`)
+    }
+  }
+  if(regRxpArr.length) {
+    inlineRegExp = new RegExp(`${regRxpArr.join('|')}$`)
+  }
+}
+
+const htmlCfg = {
+  filename: {{#if_or unit e2e}}process.env.NODE_ENV === 'testing'
+    ? 'index.html'
+    : {{/if_or}}config.build.index,
+  template: 'index.html',
+  inject: true,
+  minify: {
+    removeComments: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true
+    // more options:
+    // https://github.com/kangax/html-minifier#options-quick-reference
+  },
+  // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+  chunksSortMode: 'dependency'
+}
+
+if(inlineRegExp) htmlCfg.inlineSource = inlineRegExp
 
 const env = {{#if_or unit e2e}}process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : {{/if_or}}require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
+  resolve: {
+    alias: {
+      'vue': 'vue/dist/vue.min.js'
+    }
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -35,12 +81,24 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
     new webpack.optimize.UglifyJsPlugin({
+      parallel: true,
+      // 最紧凑的输出
+      beautify: false,
+      // 删除所有的注释
+      comments: false,
       compress: {
-        warnings: false
+        // 在UglifyJs删除没有用到的代码时不输出警告 
+        warnings: false,
+        // 删除所有的 `console` 语句
+        drop_console: true,
+        // 内嵌定义了但是只用到一次的变量
+        collapse_vars: true,
+        // 提取出出现多次但是没有定义成变量去引用的静态值
+        reduce_vars: true,
       },
-      sourceMap: config.build.productionSourceMap,
-      parallel: true
+      sourceMap: config.build.productionSourceMap
     }),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh|en/),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
@@ -59,45 +117,16 @@ const webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: {{#if_or unit e2e}}process.env.NODE_ENV === 'testing'
-        ? 'index.html'
-        : {{/if_or}}config.build.index,
-      template: 'index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
-    }),
+    new HtmlWebpackPlugin(htmlCfg),
+    new HtmlWebpackInlineSourcePlugin(),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: function (module) {
-        // any required modules inside node_modules are extracted to vendor
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
-          ) === 0
-        )
-      }
-    }),
-    // extract webpack runtime and module manifest to its own file in order to
-    // prevent vendor hash from being updated whenever app bundle is updated
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      minChunks: Infinity
+      name: ['manifest','vendor'].reverse(),
+      minChunks:Infinity
     }),
     // This instance extracts shared chunks from code splitted chunks and bundles them
     // in a separate chunk, similar to the vendor chunk
@@ -106,7 +135,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       name: 'app',
       async: 'vendor-async',
       children: true,
-      minChunks: 3
+      minChunks: (module, count) => {
+        // 被 3 个及以上 chunk 使用的共用模块提取出来
+        return count >= 3
+      }
     }),
 
     // copy custom static assets
