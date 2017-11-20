@@ -10,6 +10,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
+{{#offline}}
+const offlineWebpackConfig = require('./webpack.offline.conf')
+{{/offline}}
 
 function* entries(obj) {
   for (let key of Object.keys(obj)) {
@@ -55,7 +58,7 @@ const env = {{#if_or unit e2e}}process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : {{/if_or}}require('../config/prod.env')
 
-const webpackConfig = merge(baseWebpackConfig, {
+const webpackConfig = merge(baseWebpackConfig, {{#offline}}offlineWebpackConfig,{{/offline}} {
   resolve: {
     alias: {
       'vue': 'vue/dist/vue.min.js'
@@ -125,7 +128,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['manifest','vendor'].reverse(),
+      name: ['manifest', 'vendor'].reverse(),
       minChunks:Infinity
     }),
     // This instance extracts shared chunks from code splitted chunks and bundles them

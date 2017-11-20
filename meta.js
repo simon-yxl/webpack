@@ -54,6 +54,10 @@ module.exports = {
       "type": "confirm",
       "message": "Install vuex?"
     },
+    "offline": {
+      "type": "confirm",
+      "message": "Do you use offline package ?"
+    },
     "lint": {
       "type": "confirm",
       "message": "Use ESLint to lint your code?"
@@ -67,11 +71,6 @@ module.exports = {
           "name": "Standard (https://github.com/standard/standard)",
           "value": "standard",
           "short": "Standard"
-        },
-        {
-          "name": "Airbnb (https://github.com/airbnb/javascript)",
-          "value": "airbnb",
-          "short": "Airbnb"
         },
         {
           "name": "none (configure it yourself)",
@@ -124,7 +123,9 @@ module.exports = {
     "test/unit/setup.js": "unit && runner === 'jest'",
     "test/e2e/**/*": "e2e",
     "src/router/**/*": "router",
-    "src/vuex/**/*": "vuex"
+    "src/vuex/**/*": "vuex",
+    "config/offline.js": "offline",
+    "build/webpack.offline.conf.js": "offline"
   },
   "completeMessage": "To get started:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run dev\n\nDocumentation can be found at https://vuejs-templates.github.io/webpack"
 };
