@@ -62,23 +62,6 @@ module.exports = {
       "type": "confirm",
       "message": "Use ESLint to lint your code?"
     },
-    "lintConfig": {
-      "when": "lint",
-      "type": "list",
-      "message": "Pick an ESLint preset",
-      "choices": [
-        {
-          "name": "Standard (https://github.com/standard/standard)",
-          "value": "standard",
-          "short": "Standard"
-        },
-        {
-          "name": "none (configure it yourself)",
-          "value": "none",
-          "short": "none"
-        }
-      ]
-    },
     "unit": {
       "type": "confirm",
       "message": "Setup unit tests"
