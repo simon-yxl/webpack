@@ -11,7 +11,7 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    vendor: ['vue'{{#router}}, 'vue-router'{{/router}}{{#vuex}}, 'vuex'{{/vuex}}, '@zz/perf'],
+    vendor: [{{#babel-polyfill}}'babel-polyfill',{{/babel-polyfill}}'vue'{{#router}}, 'vue-router'{{/router}}{{#vuex}}, 'vuex'{{/vuex}}, '@zz/perf'],
     app: './src/main.js'
   },
   output: {
@@ -33,7 +33,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {{#lint}}
       ...(config.dev.useEslint? [{
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
@@ -44,7 +43,6 @@ module.exports = {
           emitWarning: !config.dev.showEslintErrorsInOverlay
         }
       }] : []),
-      {{/lint}}
       {
         test: /\.vue$/,
         loader: 'vue-loader',

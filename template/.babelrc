@@ -1,7 +1,8 @@
 {
   "presets": [
     ["env", {
-      "modules": false
+      "modules": false{{#babel-polyfill}},
+      "useBuiltIns": true{{/babel-polyfill}}
     }],
     "stage-2"
   ],

@@ -58,9 +58,9 @@ module.exports = {
       "type": "confirm",
       "message": "Do you use offline package ?"
     },
-    "lint": {
+    "babel-polyfill": {
       "type": "confirm",
-      "message": "Use ESLint to lint your code?"
+      "message": "Do you use babel-polyfill?"
     },
     "unit": {
       "type": "confirm",
@@ -94,8 +94,6 @@ module.exports = {
     }
   },
   "filters": {
-    ".eslintrc.js": "lint",
-    ".eslintignore": "lint",
     "config/test.env.js": "unit || e2e",
     "build/webpack.test.conf.js": "e2e || (unit && runner === 'karma')",
     "test/unit/**/*": "unit",
