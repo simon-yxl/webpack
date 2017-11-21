@@ -12,6 +12,9 @@ module.exports = {
       }).replace(/^(\w)/g, function(m){
         return m.toUpperCase()
       })
+    },
+    "str": function (v, options) {
+      return v.length
     }
   },
   "prompts": {
