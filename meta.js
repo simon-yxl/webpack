@@ -174,23 +174,7 @@ module.exports = {
       "when": "jenkins_npm_pkg",
       "type": "checkbox",
       "message": "选择需要配置的 sdk",
-      "choices": [{
-        "name": "@zz-vc/zui-swipe",
-        "value": "@zz-vc/zui-swipe",
-        "short": "sdk"
-      }, {
-        "name": "@zz/api-cache",
-        "value": "@zz/api-cache",
-        "short": "sdk"
-      }, {
-        "name": "@zz-vc/zui-imgdetailswipe",
-        "value": "@zz-vc/zui-imgdetailswipe",
-        "short": "sdk"
-      }, {
-        "name": "@zz-vc/callApp",
-        "value": "@zz-vc/callApp",
-        "short": "sdk"
-      }]
+      "choices": ["@zz-vc/zui-swipe", "@zz/api-cache", "@zz-vc/callApp", "@zz-vc/callApp"]
     },
     "unit": {
       "type": "confirm",
