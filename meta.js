@@ -17,7 +17,7 @@ module.exports = {
       if(v instanceof Array) {
         return v.join(' ')
       } else {
-        return v
+        return '字符串'
       }
     }
   },
