@@ -177,19 +177,19 @@ module.exports = {
       "choices": [{
         "name": "@zz-vc/zui-swipe",
         "value": "@zz-vc/zui-swipe",
-        "short": "@zz-vc/zui-swipe"
+        "short": "sdk"
       }, {
         "name": "@zz/api-cache",
         "value": "@zz/api-cache",
-        "short": "@zz/api-cache"
+        "short": "sdk"
       }, {
         "name": "@zz-vc/zui-imgdetailswipe",
         "value": "@zz-vc/zui-imgdetailswipe",
-        "short": "@zz-vc/zui-imgdetailswipe"
+        "short": "sdk"
       }, {
         "name": "@zz-vc/callApp",
         "value": "@zz-vc/callApp",
-        "short": "@zz-vc/callApp"
+        "short": "sdk"
       }]
     },
     "unit": {
