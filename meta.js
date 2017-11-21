@@ -14,7 +14,7 @@ module.exports = {
       })
     },
     "str": function (v, options) {
-      return typeof v
+      return JSON.stringify(v) 
     }
   },
   "prompts": {
