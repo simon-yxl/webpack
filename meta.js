@@ -13,8 +13,12 @@ module.exports = {
         return m.toUpperCase()
       })
     },
-    "str": function (v, options) {
-      return JSON.stringify(v)
+    "str": function (v, split =' ', options) {
+      let arr = []
+      for(let o in v) {
+        if(v[o]) arr.push(o)
+      }
+      return arr.join(split)
     }
   },
   "prompts": {
