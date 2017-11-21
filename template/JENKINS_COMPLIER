@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -f node_modules.tar.gz ] && $use_succ_node_modules; then
+  tar -zxvf node_modules.tar.gz
+else
+  npm install node-sass --unsafe-perm  --no-cache --registry=https://registry.npm.taobao.org --sass-binary-site=http://npm.taobao.org/mirrors/node-sass
+  npm install @zz/zz-jssdk @zz/perf {{jenkins_npm_pkg_list}} --registry=http://zzfe.rcnpm.58corp.com
+  npm i --registry=https://registry.npm.taobao.org
+fi
+
+npm run build

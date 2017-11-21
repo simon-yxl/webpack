@@ -1,0 +1,53 @@
+{
+  "servers": {
+    "server": [
+      {
+        "type": "test",
+        "name": "{{jenkins_test_cnd_address}}-cdn-for-test",
+        "transfers": {
+          "transfer": [
+            {
+              "sourceFiles": "dist/static/**",
+              "remoteDirectory": "{{jenkins_test_cnd_path}}"
+            }
+          ]
+        }
+      },
+      {
+        "type": "test",
+        "name": "{{jenkins_test_html_address}}-html-for-test",
+        "transfers": {
+          "transfer": [
+            {
+              "sourceFiles": "dist/webserver/*.html",
+              "remoteDirectory": "{{jenkins_test_html_path}}"
+            }
+          ]
+        }
+      },
+      {
+        "type": "online",
+        "name": "{{jenkins_online_cdn_address}}-for-cdn-online",
+        "transfers": {
+          "transfer": [
+            {
+              "sourceFiles": "dist/static/**",
+              "remoteDirectory": "{{jenkins_online_cdn_path}}"
+            }
+          ]
+        }
+      },{
+        "type": "online",
+        "name": "{{jenkins_online_html_address}}-for-html-online",
+        "transfers": {
+          "transfer": [
+            {
+              "sourceFiles": "dist/webserver/*.html",
+              "remoteDirectory": "{{jenkins_online_html_path}}"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
