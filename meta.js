@@ -13,12 +13,12 @@ module.exports = {
         return m.toUpperCase()
       })
     },
-    "str": function (v, split =' ', options) {
+    "str_space": function (v, options) {
       let arr = []
       for(let o in v) {
         if(v[o]) arr.push(o)
       }
-      return arr.join(split)
+      return arr.join(' ')
     }
   },
   "prompts": {
