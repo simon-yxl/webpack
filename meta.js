@@ -14,7 +14,7 @@ module.exports = {
       })
     },
     "str": function (v, options) {
-      return v || '值不存在'
+      return typeof v
     }
   },
   "prompts": {
