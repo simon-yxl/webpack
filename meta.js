@@ -140,7 +140,7 @@ module.exports = {
       "message": "填写线上环境cdn路径"
     },
     "jenkins_online_html_address":{
-      "when": "jenkins_online_cnd_path",
+      "when": "jenkins_online_cdn_path",
       "type": "list",
       "message": "配置jenkins上html文件存放的线上环境地址",
       "choices": [{
