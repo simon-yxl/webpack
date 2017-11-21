@@ -134,7 +134,7 @@ module.exports = {
         "short": "c.58cdn.com.cn"
       }]
     },
-    "jenkins_online_cnd_path":{
+    "jenkins_online_cdn_path":{
       "when": "jenkins_online_cdn_address",
       "type": "input",
       "message": "填写线上环境cdn路径"
@@ -184,9 +184,9 @@ module.exports = {
         "value": "@zz-vc/zui-imgdetailswipe",
         "short": "@zz-vc/zui-imgdetailswipe"
       }, {
-        "name": "@zz-vc/zui-imgdetailswipe",
-        "value": "@zz-vc/zui-imgdetailswipe",
-        "short": "@zz-vc/zui-imgdetailswipe"
+        "name": "@zz-vc/callApp",
+        "value": "@zz-vc/callApp",
+        "short": "@zz-vc/callApp"
       }]
     },
     "unit": {
