@@ -12,13 +12,6 @@ module.exports = {
       }).replace(/^(\w)/g, function(m){
         return m.toUpperCase()
       })
-    },
-    "str": function (v, options) {
-      if(v instanceof Array) {
-        return v.join(' ')
-      } else {
-        return '字符串'
-      }
     }
   },
   "prompts": {
